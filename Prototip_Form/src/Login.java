@@ -120,6 +120,7 @@ public class Login extends JFrame{
 		                    JOptionPane.showMessageDialog(frame, "Не верно!");
 		                }
 		            }
+				 
 		}
 	 }	
 }

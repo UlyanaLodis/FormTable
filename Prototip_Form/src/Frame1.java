@@ -40,6 +40,13 @@ import javax.swing.ImageIcon;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.glassfish.jersey.client.ClientConfig;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.ui.RefineryUtilities;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -63,7 +70,7 @@ public class Frame1 {
 	class Frame extends JFrame{
 
 		JComboBox comboBox;
-		 private JFrame frame;
+		 private JFrame frame, frame1;
 		    private DefaultTableModel model,model1;
 		    private JButton save, open, add, delete, pac, otchot;
 		    private JToolBar toolBar;
@@ -85,10 +92,9 @@ public class Frame1 {
 		frame.setSize(1000, 300);
         frame.setLocation(100,100);
         frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
-        Default def = new Default();
-        frame.addWindowListener(def);
+        
 		
 		 ScrollPane sc = new ScrollPane();
         //Создание кнопок и прикрепление иконок
@@ -187,61 +193,11 @@ public class Frame1 {
          panel.add(comboBox,BorderLayout.CENTER); 
          DDDD AD = new DDDD();
          pac.addActionListener(AD);
+         otchot.addActionListener(AD);
 
 		 }
 
-class Default implements WindowListener {
 
-    @Override
-    public void windowOpened(WindowEvent e) {
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        Object[] options = {"Да", "Нет!"};
-        int n = JOptionPane
-                .showOptionDialog(e.getWindow(), "Закрыть программу?",
-                        "Подтверждение", JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE, null, options,
-                        options[0]);
-        if (n == 0) {
-            int i = JOptionPane
-                    .showOptionDialog(e.getWindow(), "Сохранить данные?",
-                            "Подтверждение", JOptionPane.YES_NO_OPTION,
-                            JOptionPane.QUESTION_MESSAGE, null, options,
-                            options[0]);
-            e.getWindow().setVisible(false);
-            System.exit(0);
-        }
-
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-
-    }
-    
-	}
 	class DDDD implements ActionListener {
 		public void actionPerformed(ActionEvent ev){
 			 if (ev.getSource() == pac) {
@@ -252,6 +208,28 @@ class Default implements WindowListener {
 	                } else {
 	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали ECU");
 	                }
+	            }
+			 if (ev.getSource() == otchot) {
+	                
+
+				 PieChart demo = new PieChart("JFreeChart: StackedXYBarChart");
+			        demo.pack();
+			        // И показываем
+			       RefineryUtilities.centerFrameOnScreen(demo);
+			       demo.setVisible(true);
+				 /*DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+				 dataset.setValue(10, "ECU1", "Core1");
+				 dataset.setValue(10, "ECU1", "Task 1");
+				 dataset.setValue(10, "ECU1", "Frame 1");
+				 
+				 JFreeChart chart = ChartFactory.createBarChart("Modeling ECU1", "Modeling components", "Quantity", dataset, PlotOrientation.VERTICAL,false, true,false);
+				 CategoryPlot p= chart.getCategoryPlot();
+				 p.setRangeGridlinePaint(Color.black);
+				 
+				 ChartFrame f=new ChartFrame ("ModEAS", chart); 
+				 f.setVisible(true);
+				 f.setSize(450,350);*/
+		 
 	            }
 	}
 		}
