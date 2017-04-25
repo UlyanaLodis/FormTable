@@ -69,8 +69,9 @@ public class Login extends JFrame{
 		 frame = new JFrame();
 		frame.setSize(250, 150);
         frame.setLocation(500,100);
+        frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		
        		
 		 Box mainBox = Box.createVerticalBox();
          Box box1 = Box.createHorizontalBox();
@@ -83,6 +84,7 @@ public class Login extends JFrame{
       	Box box2 = Box.createHorizontalBox();
 		b1 = new JLabel("Password");
      	num1 = new JTextField(15);
+     	
      	box2.add(b1);
      	box2.add(Box.createHorizontalStrut(6));
      	box2.add(num1);
@@ -102,6 +104,7 @@ public class Login extends JFrame{
         mainBox.add(Box.createVerticalStrut(12));
         mainBox.add(box3);
         frame.add(mainBox);
+        frame.setVisible(true);
 		}
 		
 		class DDDD implements ActionListener {
@@ -112,7 +115,7 @@ public class Login extends JFrame{
 
 		                if ( n.equals("login") && n1.equals("password")) {
 		                	Frame window = new Frame();
-		                	
+		                	frame.setVisible(false);
 		                } else {
 		                    JOptionPane.showMessageDialog(frame, "Не верно!");
 		                }

@@ -84,6 +84,7 @@ public class Frame1 {
 		 frame = new JFrame();
 		frame.setSize(1000, 300);
         frame.setLocation(100,100);
+        frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.setVisible(true);
         Default def = new Default();

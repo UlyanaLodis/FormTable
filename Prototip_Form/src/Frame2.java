@@ -68,6 +68,7 @@ import javax.swing.JButton;
 		frame = new JFrame();
 		frame.setSize(1000, 300);
         frame.setLocation(100,100);
+        frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
         
