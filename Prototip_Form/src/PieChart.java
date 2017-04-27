@@ -1,129 +1,255 @@
-import java.awt.*;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import javax.swing.*;
- 
+
+import java.awt.FlowLayout;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.DateAxis;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.labels.StandardXYItemLabelGenerator;
-import org.jfree.chart.labels.StandardXYToolTipGenerator;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
-import org.jfree.data.time.TimeTableXYDataset;
-import org.jfree.data.time.Year;
-import org.jfree.data.xy.TableXYDataset;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.RefineryUtilities;
-import org.jfree.ui.VerticalAlignment;
- 
- 
-public class PieChart extends ApplicationFrame {
- 
-    /**
-     * Создаёт новый фрейм с графиком
-     * @param title Заголовок окна
-     */
-    public PieChart(String title) {
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.category.DefaultIntervalCategoryDataset;
+import org.jfree.data.category.IntervalCategoryDataset;
+import org.jfree.data.general.Dataset;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.time.Month;
+import org.jfree.data.time.SimpleTimePeriod;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.gantt.TaskSeriesCollection;
+import org.jfree.data.gantt.TaskSeries;
+import org.jfree.data.gantt.Task;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+
+public class PieChart  extends JFrame {
+	private static final long serialVersionUID = 1L;
+	protected static final PlotOrientation VERTICAL = null;
+	private JPanel contentPane;
+	 private static Date date(final int day, final int month, final int year) {
+
+	        final Calendar calendar = Calendar.getInstance();
+	        calendar.set(year, month, day);
+	        final Date result = calendar.getTime();
+	        return result;
+
+	    }
+	 private Date date(int hour) {
+	        final Calendar calendar = Calendar.getInstance();
+	        calendar.set(2009, Calendar.DECEMBER, 1, hour, 0, 0);
+	        return calendar.getTime();
+	    }
+	public PieChart() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JPanel panel = new JPanel();
+		
+		JPanel panel_1 = new JPanel();
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JButton btnCreatePlot = new JButton("Create Plot");
+		btnCreatePlot.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+			/**	DefaultIntervalCategoryDataset s1 = new DefaultIntervalCategoryDataset();*/
+				TaskSeriesCollection s1 = new TaskSeriesCollection();
+				TaskSeries d1 = new TaskSeries("Plot");
+				Task t1 = new Task("CPU1", date(3), date(20));
+				t1.addSubtask(new Task("Task1", date(3), date(5)));
+				t1.addSubtask(new Task("Task2", date(6), date(9)));
+				d1.add(t1);
+				Task t2 = new Task("CPU2", date(3), date(20));
+				t2.addSubtask(new Task("Task3", date(4), date(7)));
+				t2.addSubtask(new Task("Task4", date(8), date(12)));
+				d1.add(t2);
+				s1.add(d1);
+				
+				JFreeChart jchart = ChartFactory.createGanttChart("Graph", "CPU", "Tasks", s1, true, true, true);
+				ChartFrame chartFrm = new ChartFrame("oo",jchart,true);
+				chartFrm.setVisible(true);;
+				chartFrm.setSize(500,400);
+				chartFrm.validate();
+				
+			}
+		});
+		panel_1.add(btnCreatePlot);
+		contentPane.setLayout(gl_contentPane);
+	}
+   /* public PieChart(final String title) {
+
         super(title);
-        // Создаём новый график
-        JFreeChart chart = createChart(createDataset());
-        // На панеле
-        ChartPanel chartPanel = new ChartPanel(chart);
-        // С размерами 450*450
-        chartPanel.setPreferredSize(new Dimension(450, 450));
-        // И ползунками если необходимо
-        JScrollPane sp = new JScrollPane(chartPanel);
-        sp.setPreferredSize(new Dimension(500, 500));
-        sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        setContentPane(sp);
+        
+
+        final IntervalCategoryDataset dataset = createDataset();
+        final JFreeChart chart = createChart(dataset);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // add the chart to a panel...
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        setContentPane(chartPanel);
+
     }
+
+    // ****************************************************************************
+    // * JFREECHART DEVELOPER GUIDE                                               *
+    // * The JFreeChart Developer Guide, written by David Gilbert, is available   *
+    // * to purchase from Object Refinery Limited:                                *
+    // *                                                                          *
+    // * http://www.object-refinery.com/jfreechart/guide.html                     *
+    // *                                                                          *
+    // * Sales are used to provide funding for the JFreeChart project - please    * 
+    // * support us so that we can continue developing free software.             *
+    // ****************************************************************************
+    
  
-    /**
-     * Наполняет Set данными для построения графика
-     * @return Данные для построения
-     */
-    private static TableXYDataset createDataset() {
-        // Типа данные
-        TimeTableXYDataset dataset = new TimeTableXYDataset();
-        dataset.add(new Year(2002), 50, "Blue");
-        dataset.add(new Year(2003), 50, "Blue");
-        dataset.add(new Year(2002), 10, "Red");
-        dataset.add(new Year(2003), 50, "Red");
-        return dataset;
+    public static IntervalCategoryDataset createDataset() {
+
+        final TaskSeries s1 = new TaskSeries("Scheduled");
+        s1.add(new Task("Write Proposal",
+               new SimpleTimePeriod(date(1, Calendar.APRIL, 2001),
+                                    date(5, Calendar.APRIL, 2001))));
+        s1.add(new Task("Obtain Approval",
+               new SimpleTimePeriod(date(9, Calendar.APRIL, 2001),
+                                    date(9, Calendar.APRIL, 2001))));
+        s1.add(new Task("Requirements Analysis",
+               new SimpleTimePeriod(date(10, Calendar.APRIL, 2001),
+                                    date(5, Calendar.MAY, 2001))));
+        s1.add(new Task("Design Phase",
+               new SimpleTimePeriod(date(6, Calendar.MAY, 2001),
+                                    date(30, Calendar.MAY, 2001))));
+        s1.add(new Task("Design Signoff",
+               new SimpleTimePeriod(date(2, Calendar.JUNE, 2001),
+                                    date(2, Calendar.JUNE, 2001))));
+        s1.add(new Task("Alpha Implementation",
+               new SimpleTimePeriod(date(3, Calendar.JUNE, 2001),
+                                    date(31, Calendar.JULY, 2001))));
+        s1.add(new Task("Design Review",
+               new SimpleTimePeriod(date(1, Calendar.AUGUST, 2001),
+                                    date(8, Calendar.AUGUST, 2001))));
+        s1.add(new Task("Revised Design Signoff",
+               new SimpleTimePeriod(date(10, Calendar.AUGUST, 2001),
+                                    date(10, Calendar.AUGUST, 2001))));
+        s1.add(new Task("Beta Implementation",
+               new SimpleTimePeriod(date(12, Calendar.AUGUST, 2001),
+                                    date(12, Calendar.SEPTEMBER, 2001))));
+        s1.add(new Task("Testing",
+               new SimpleTimePeriod(date(13, Calendar.SEPTEMBER, 2001),
+                                    date(31, Calendar.OCTOBER, 2001))));
+        s1.add(new Task("Final Implementation",
+               new SimpleTimePeriod(date(1, Calendar.NOVEMBER, 2001),
+                                    date(15, Calendar.NOVEMBER, 2001))));
+        s1.add(new Task("Signoff",
+               new SimpleTimePeriod(date(28, Calendar.NOVEMBER, 2001),
+                                    date(30, Calendar.NOVEMBER, 2001))));
+
+        final TaskSeries s2 = new TaskSeries("Actual");
+        s2.add(new Task("Write Proposal",
+               new SimpleTimePeriod(date(1, Calendar.APRIL, 2001),
+                                    date(5, Calendar.APRIL, 2001))));
+        s2.add(new Task("Obtain Approval",
+               new SimpleTimePeriod(date(9, Calendar.APRIL, 2001),
+                                    date(9, Calendar.APRIL, 2001))));
+        s2.add(new Task("Requirements Analysis",
+               new SimpleTimePeriod(date(10, Calendar.APRIL, 2001),
+                                    date(15, Calendar.MAY, 2001))));
+        s2.add(new Task("Design Phase",
+               new SimpleTimePeriod(date(15, Calendar.MAY, 2001),
+                                    date(17, Calendar.JUNE, 2001))));
+        s2.add(new Task("Design Signoff",
+               new SimpleTimePeriod(date(30, Calendar.JUNE, 2001),
+                                    date(30, Calendar.JUNE, 2001))));
+        s2.add(new Task("Alpha Implementation",
+               new SimpleTimePeriod(date(1, Calendar.JULY, 2001),
+                                    date(12, Calendar.SEPTEMBER, 2001))));
+        s2.add(new Task("Design Review",
+               new SimpleTimePeriod(date(12, Calendar.SEPTEMBER, 2001),
+                                    date(22, Calendar.SEPTEMBER, 2001))));
+        s2.add(new Task("Revised Design Signoff",
+               new SimpleTimePeriod(date(25, Calendar.SEPTEMBER, 2001),
+                                    date(27, Calendar.SEPTEMBER, 2001))));
+        s2.add(new Task("Beta Implementation",
+               new SimpleTimePeriod(date(27, Calendar.SEPTEMBER, 2001),
+                                    date(30, Calendar.OCTOBER, 2001))));
+        s2.add(new Task("Testing",
+               new SimpleTimePeriod(date(31, Calendar.OCTOBER, 2001),
+                                    date(17, Calendar.NOVEMBER, 2001))));
+        s2.add(new Task("Final Implementation",
+               new SimpleTimePeriod(date(18, Calendar.NOVEMBER, 2001),
+                                    date(5, Calendar.DECEMBER, 2001))));
+        s2.add(new Task("Signoff",
+               new SimpleTimePeriod(date(10, Calendar.DECEMBER, 2001),
+                                    date(11, Calendar.DECEMBER, 2001))));
+
+        final TaskSeriesCollection collection = new TaskSeriesCollection();
+        collection.add(s1);
+        collection.add(s2);
+
+        return collection;
     }
- 
-    /**
-     * Создаёт новый график по данным
-     * @param dataset данные для построения
-     * @return график
-     */
-    private static JFreeChart createChart(TableXYDataset dataset) {
- 
-        // OX - ось абсцисс
-        // задаем название оси
-        DateAxis domainAxis = new DateAxis("Year");
-        // Показываем стрелочку вправо
-        domainAxis.setPositiveArrowVisible(true);
-        // Задаем отступ от графика
-        domainAxis.setUpperMargin(0.2);
- 
-        // OY - ось ординат
-        // Задаём название оси
-        NumberAxis rangeAxis = new NumberAxis("Color");
-        // Задаём величину деления
-        rangeAxis.setStandardTickUnits(NumberAxis.createStandardTickUnits());
-        rangeAxis.setTickUnit(new NumberTickUnit(200));
-        // Показываем стрелочку вверх
-        rangeAxis.setPositiveArrowVisible(true);
- 
- 
-        // Render
-        // Создаем стопковый (не знаю как лучше перевести) график
-        // 0.02 - расстояние между столбиками
-        StackedXYBarRenderer renderer = new StackedXYBarRenderer(0.02);
-        // без рамки
-        renderer.setDrawBarOutline(false);
-        // цвета для каждого элемента стопки
-        renderer.setSeriesPaint(0, Color.blue);
-        renderer.setSeriesPaint(1, Color.red);
-        // Задаём формат и текст подсказки
-        renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator("{0} : {1} = {2} tonnes", new SimpleDateFormat("yyyy"), new DecimalFormat("#,##0")));
-        renderer.setSeriesItemLabelGenerator(0, new StandardXYItemLabelGenerator());
-        renderer.setSeriesItemLabelGenerator(1, new StandardXYItemLabelGenerator());
-        // Делаем её видимой
-        renderer.setSeriesItemLabelsVisible(0, true);
-        renderer.setSeriesItemLabelsVisible(1, true);
-        // И описываем её шрифт
-        renderer.setSeriesItemLabelFont(0, new Font("Serif", Font.BOLD, 10));
-        renderer.setSeriesItemLabelFont(1, new Font("Serif", Font.BOLD, 10));
- 
-        // Plot
-        // Создаем область рисования
-        XYPlot plot = new XYPlot(dataset, domainAxis, rangeAxis, renderer);
-        // Закрашиваем
-        plot.setBackgroundPaint(Color.white);
-        // Закрашиваем сетку
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        // Отступ от осей
-        plot.setAxisOffset(new RectangleInsets(0D, 0D, 10D, 10D));
-        plot.setOutlinePaint(null);
- 
-        // Chart
-        // Создаем новый график
-        JFreeChart chart = new JFreeChart(plot);
-        // Закрашиваем
-        chart.setBackgroundPaint(Color.white);
-        // Перемещаем легенду в верхний правый угол
-        chart.getLegend().setPosition(RectangleEdge.RIGHT);
-        chart.getLegend().setVerticalAlignment(VerticalAlignment.TOP);
- 
-        return chart;
+
+    
+    private static Date date(final int day, final int month, final int year) {
+
+        final Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        final Date result = calendar.getTime();
+        return result;
+
     }
- 
+        
+    
+    private JFreeChart createChart(final IntervalCategoryDataset dataset) {
+        final JFreeChart chart = ChartFactory.createGanttChart(
+            "Gantt Chart Demo",  // chart title
+            "Task",              // domain axis label
+            "Date",              // range axis label
+            dataset,             // data
+            true,                // include legend
+            true,                // tooltips
+            false                // urls
+        );    
+//        chart.getCategoryPlot().getDomainAxis().setMaxCategoryLabelWidthRatio(10.0f);
+        return chart;    
+    }*/
 }
+
+
+

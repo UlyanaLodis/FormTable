@@ -46,6 +46,10 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.category.DefaultIntervalCategoryDataset;
+import org.jfree.data.gantt.Task;
+import org.jfree.data.gantt.TaskSeries;
+import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.ui.RefineryUtilities;
 
 import java.awt.Component;
@@ -55,6 +59,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URI;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -199,6 +205,19 @@ public class Frame1 {
 
 
 	class DDDD implements ActionListener {
+		 private Date date(final int day, final int month, final int year) {
+
+		        final Calendar calendar = Calendar.getInstance();
+		        calendar.set(year, month, day);
+		        final Date result = calendar.getTime();
+		        return result;
+
+		    }
+		 private Date date(int hour) {
+		        final Calendar calendar = Calendar.getInstance();
+		        calendar.set(2009, Calendar.DECEMBER, 1, hour, 0, 0);
+		        return calendar.getTime();
+		    }
 		public void actionPerformed(ActionEvent ev){
 			 if (ev.getSource() == pac) {
 	                
@@ -210,26 +229,54 @@ public class Frame1 {
 	                }
 	            }
 			 if (ev.getSource() == otchot) {
-	                
+				
+				 //DefaultIntervalCategoryDataset s1 = new DefaultIntervalCategoryDataset();*/
+					TaskSeriesCollection s1 = new TaskSeriesCollection();
+					TaskSeries d1 = new TaskSeries("Task 1");
+					Task t1 = new Task("Core1", date(1), date(24));
+					t1.addSubtask(new Task("Task1", date(3), date(5)));
+					t1.addSubtask(new Task("Task2", date(6), date(9)));
+					d1.add(t1);
+					Task t2 = new Task("Core2", date(1), date(24));
+					t2.addSubtask(new Task("Task1", date(4), date(7)));
+					t2.addSubtask(new Task("Task2", date(8), date(12)));
+					d1.add(t2);
+					Task t3 = new Task("Core3", date(1), date(24));
+					t3.addSubtask(new Task("Task1", date(9), date(11)));
+					t3.addSubtask(new Task("Task2", date(10), date(12)));
+					d1.add(t3);
+					Task tg = new Task("Core4", date(1), date(24));
+					tg.addSubtask(new Task("Task1", date(16), date(17)));
+					tg.addSubtask(new Task("Task2", date(18), date(19)));
+					d1.add(tg);
+					Task tk = new Task("Core5", date(1), date(24));
+					tk.addSubtask(new Task("Task1", date(2), date(3)));
+					tk.addSubtask(new Task("Task2", date(4), date(8)));
+					d1.add(tk);
+					s1.add(d1);
+					
+					TaskSeries d2 = new TaskSeries("Task2");
+					Task t4 = new Task("Core1", date(1), date(24));
+					t4.addSubtask(new Task("Task1", date(1), date(5)));
+					t4.addSubtask(new Task("Task2", date(22), date(23)));
+					d2.add(t4);
+					Task t5 = new Task("Core2", date(1), date(24));
+					t5.addSubtask(new Task("Task1", date(7), date(12)));
+					t5.addSubtask(new Task("Task2", date(0), date(2)));
+					d2.add(t5);
+					Task t6 = new Task("Core3", date(1), date(24));
+					t6.addSubtask(new Task("Task1", date(5), date(15)));
+					t6.addSubtask(new Task("Task2", date(8), date(13)));
+					d2.add(t6);
+					s1.add(d2);
+					
+					JFreeChart jchart = ChartFactory.createGanttChart("Graphic", "ECU1", "Tasks", s1, true, true, true);
+					ChartFrame chartFrm = new ChartFrame("ModEAS Graphic",jchart,true);
+					chartFrm.setVisible(true);;
+					chartFrm.setSize(500,400);
+					chartFrm.validate();
 
-				 PieChart demo = new PieChart("JFreeChart: StackedXYBarChart");
-			        demo.pack();
-			        // И показываем
-			       RefineryUtilities.centerFrameOnScreen(demo);
-			       demo.setVisible(true);
-				 /*DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-				 dataset.setValue(10, "ECU1", "Core1");
-				 dataset.setValue(10, "ECU1", "Task 1");
-				 dataset.setValue(10, "ECU1", "Frame 1");
-				 
-				 JFreeChart chart = ChartFactory.createBarChart("Modeling ECU1", "Modeling components", "Quantity", dataset, PlotOrientation.VERTICAL,false, true,false);
-				 CategoryPlot p= chart.getCategoryPlot();
-				 p.setRangeGridlinePaint(Color.black);
-				 
-				 ChartFrame f=new ChartFrame ("ModEAS", chart); 
-				 f.setVisible(true);
-				 f.setSize(450,350);*/
-		 
+						 
 	            }
 	}
 		}
