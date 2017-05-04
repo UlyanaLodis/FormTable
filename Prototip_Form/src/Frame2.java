@@ -61,7 +61,7 @@ import javax.swing.JButton;
 	 
 	 JTextField  nam, cor, bus;
 	 JComboBox comboBox, comboBox1, comboBox2;
-	 JButton button1, button2, save, add, delete, prosm,prosm1, otchot ;
+	 JButton button1, button2, save, add, delete, deletetask, deleteframe, otchot, addcore, addtask, addframe;
 	 JToolBar toolBar;
 	 JFrame frame;
 	 JButton ok,cancel;
@@ -72,6 +72,8 @@ import javax.swing.JButton;
 	 private JTable books,books1,books2;
 	 private DefaultTableModel model,model1,model2;
 	 String bu="", cores="";
+	 
+	 ///////////////////////
 	 String[] taskName = {
 				"Task 1", 
 				"Task 2",
@@ -87,58 +89,39 @@ import javax.swing.JButton;
 	    int [] nk = {2, 8, 12, 7, 12, 20, 17,24};
 	    Task[] t1;
 	    TaskSeries [] t2;
+	    ////////////////////////////////////
+	    
 	public Edit_cpu (String name){
-		frame = new JFrame();
-		frame.setSize(1000, 300);
+		
+		/////////////////
+		frame = new JFrame(name);
+		///////////////
+		
+		frame.setSize(1000, 500);
         frame.setLocation(100,100);
-        frame.setResizable(false);
+        //frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
         
 		
 		ScrollPane sc = new ScrollPane();
         //Создание кнопок и прикрепление иконок
-        save = new JButton("Сохранить");
-        save.setToolTipText("Сохранить список компонентов");
-        toolBar = new JToolBar("Панель инструментов");
-        toolBar.add(save);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH);
-
-        add = new JButton("Добавить");
-        add.setToolTipText("Добавить компонент");
-        toolBar.add(add);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH);
-
-        delete = new JButton("Удалить");
-        delete.setToolTipText("Удалить компонент");
-        toolBar.add(delete);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH); 
-        
-        prosm = new JButton("Просмотреть Core");
-        prosm.setToolTipText("Просмотреть Core");
-        toolBar.add(prosm);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH); 
-        prosm1 = new JButton("Просмотреть Task");
-        prosm1.setToolTipText("Просмотреть Task");
-        toolBar.add(prosm1);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH); 
+            
+		 toolBar = new JToolBar("Панель инструментов");      
+        //////////////////////
         otchot=new JButton("Отчёт");
         otchot.setToolTipText("Графики");
         toolBar.add(otchot);
         frame.setLayout(new BorderLayout());
         frame.add(toolBar, BorderLayout.NORTH);
         DDDD AD = new DDDD();
-        prosm.addActionListener(AD);
         otchot.addActionListener(AD);
-         
+         ///////////////////////////////
+        
         Box mainBox = Box.createVerticalBox();
+        mainBox.setBorder(new TitledBorder("Core"));
         Box box1 = Box.createHorizontalBox();
-		b = new JLabel(name);
+		b = new JLabel("Core");
      	box1.add(b);
      	
 		headers = new Object[]{"№", "Tasks"};
@@ -155,6 +138,16 @@ import javax.swing.JButton;
         Box box2 = Box.createHorizontalBox();
 		box2.add(scroll);
 		
+		/////////////////////////////
+		Box boxcore = Box.createHorizontalBox();
+		addcore = new JButton("Добавить");
+		boxcore.add(addcore);
+		addcore.addActionListener(AD);
+	    delete = new JButton("Удалить");
+	    delete.setToolTipText("Удалить компонент");
+	    boxcore.add(delete);
+	    ////////////////////////////
+		
 		Box box3 = Box.createHorizontalBox();
 		JButton button1 = new JButton("OK");
 		JButton button2 = new JButton("Отмена");
@@ -164,11 +157,17 @@ import javax.swing.JButton;
 		mainBox.add(box1);
 		mainBox.add(box2);
 		
+		//////////////////////
+		mainBox.add(boxcore);
+		///////////////////////
+		
 		frame.add(mainBox, BorderLayout.WEST);
 
 		Box mainBoxC = Box.createVerticalBox();
+		Box mainBoxC1 = Box.createVerticalBox();
+		mainBoxC1.setBorder(new TitledBorder("Task"));
         Box boxC = Box.createHorizontalBox();
-		bC = new JLabel("Task parametr");
+		bC = new JLabel("Task");
      	boxC.add(bC);
      	headers1 = new Object[]{"№", "Name", "Type", "Offset", "Length", "Period","Frame"};
         Object[][] data1 = {
@@ -183,14 +182,26 @@ import javax.swing.JButton;
         books1.setGridColor(Color.BLUE);
         Box boxC1 = Box.createHorizontalBox();
 		boxC1.add(scroll1);
-		            		
-		mainBoxC.add(boxC);
-		mainBoxC.add(boxC1);
+		
+		///////////////////////////
+		Box boxtask = Box.createHorizontalBox();
+		addtask = new JButton("Добавить");
+		boxtask.add(addtask); 
+		deletetask = new JButton("Удалить");
+		deletetask.setToolTipText("Удалить компонент");
+		boxtask.add(deletetask);     
+		mainBoxC1.add(boxC);
+		mainBoxC1.add(boxC1);
+		mainBoxC1.add(boxtask);
+		mainBoxC.add(mainBoxC1);
+		///////////////////////////
+		
 		frame.add(mainBoxC, BorderLayout.CENTER);
 		
 		Box mainBoxF = Box.createVerticalBox();
+		mainBoxF.setBorder(new TitledBorder("Frame"));
         Box boxF = Box.createHorizontalBox();
-		bF = new JLabel("Frame parametr");
+		bF = new JLabel("Frame");
      	boxF.add(bF);
      	headers2 = new Object[]{"№", "Name", "Length"};
         Object[][] data2 = {
@@ -205,11 +216,19 @@ import javax.swing.JButton;
         books2.setGridColor(Color.BLUE);
         Box boxF1 = Box.createHorizontalBox();
 		boxF1.add(scroll2);
+		
+		Box boxframe = Box.createHorizontalBox();
+		addframe = new JButton("Добавить");
+		boxframe.add(addframe);
+		deleteframe = new JButton("Удалить");
+		deleteframe.setToolTipText("Удалить компонент");
+		boxframe.add(deleteframe);
 		            		
-		mainBoxC.add(boxF);
-		mainBoxC.add(boxF1);
-		mainBoxC.add(box3);
-		frame.add(mainBoxF, BorderLayout.EAST);
+		mainBoxF.add(boxF);
+		mainBoxF.add(boxF1);
+		mainBoxF.add(boxframe);
+		mainBoxC.add(mainBoxF);
+
 		
 		button1.addActionListener(new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
@@ -237,17 +256,8 @@ import javax.swing.JButton;
 	        return calendar.getTime();
 	    }
 		public void actionPerformed(ActionEvent ev){
-			 if (ev.getSource() == prosm) {
-	                
-	                if (books.getSelectedRow() != -1) {
-	                	//Edit_cpu oop = new Edit_cpu((String) model1.getValueAt(books1.getSelectedRow(), 1));
-	                   // oop.setVisible(true);
-	                	
-	                } else {
-	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали Tasks");
-	                }
-	            }
 			 
+			 /////////////////////////////////////////////////////////////////////////
 			 if (ev.getSource() == otchot) {
 				 if (books.getSelectedRow() != -1) {
 				 TaskSeriesCollection s1 = new TaskSeriesCollection();
@@ -266,8 +276,8 @@ import javax.swing.JButton;
 				s1.add(t2[k]);
 				 }
 				 			 								
-					JFreeChart jchart = ChartFactory.createGanttChart("Graphic", (String) model.getValueAt(books.getSelectedRow(), 1), "Tasks", s1, true, true, true);
-					ChartFrame chartFrm = new ChartFrame("ModEAS Graphic",jchart,true);
+					JFreeChart jchart = ChartFactory.createGanttChart("Diagram", (String) model.getValueAt(books.getSelectedRow(), 1), "Tasks", s1, true, true, true);
+					ChartFrame chartFrm = new ChartFrame("ModEAS diagram",jchart,true);
 					chartFrm.setVisible(true);;
 					chartFrm.setSize(800,500);
 					chartFrm.setLocation(300,100);
@@ -276,6 +286,15 @@ import javax.swing.JButton;
 				 else
 				 {JOptionPane.showMessageDialog(frame, "Вы не выбрали CORE");}
 			 }
+			 
+			 if (ev.getSource() == addcore) {
+				 
+				 
+				 AddCore oop = new AddCore(); 
+				 
+			 }
+			 ///////////////////////////////////////////////////////////////////////////
+			 
 	}
  }	
 

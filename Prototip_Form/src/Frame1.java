@@ -97,7 +97,11 @@ public class Frame1 {
 		    org.w3c.dom.Document doc;
 		    
 		public Frame() {
-		 frame = new JFrame();
+			
+		///////////////
+		 frame = new JFrame("ModEAS");
+		 /////////////
+		 
 		frame.setSize(1000, 300);
         frame.setLocation(100,100);
         frame.setResizable(false);
@@ -107,19 +111,9 @@ public class Frame1 {
 		
 		 ScrollPane sc = new ScrollPane();
         //Создание кнопок и прикрепление иконок
-        save = new JButton("Сохранить");
-        save.setToolTipText("Сохранить список компонентов");
         toolBar = new JToolBar("Панель инструментов");
-        toolBar.add(save);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH);
 
-        open = new JButton("Загрузить");
-        open.setToolTipText("Загрузить с бд");
-        toolBar.add(open);
-        frame.setLayout(new BorderLayout());
-        frame.add(toolBar, BorderLayout.NORTH);
-
+      
         add = new JButton("Добавить");
         add.setToolTipText("Добавить компонент");
         toolBar.add(add);
@@ -195,12 +189,14 @@ public class Frame1 {
          panel.add(comboBox,BorderLayout.CENTER); 
          DDDD AD = new DDDD();
          pac.addActionListener(AD);
+         add.addActionListener(AD);
 		 }
 
 
 	class DDDD implements ActionListener {
 		
 		public void actionPerformed(ActionEvent ev){
+			
 			 if (ev.getSource() == pac) {
 	                
 	                if (books1.getSelectedRow() != -1) {
@@ -210,6 +206,7 @@ public class Frame1 {
 	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали ECU");
 	                }
 	            }
+			 
 			
 	}
 		}
