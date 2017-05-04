@@ -86,6 +86,8 @@ public class Frame1 {
 		    private JTextField bookName;
 		    private JButton filter;
 		    private JLabel sortingLabel;
+		    Task[] t1;
+		    TaskSeries [] t2;
 		    String elements[];
 		    Object headers[],headers1[];
 		    Object data[][],data1[][];
@@ -93,6 +95,7 @@ public class Frame1 {
 		    String str = new String("");
 		    JLabel b,b1, b2;
 		    org.w3c.dom.Document doc;
+		    
 		public Frame() {
 		 frame = new JFrame();
 		frame.setSize(1000, 300);
@@ -134,13 +137,7 @@ public class Frame1 {
          toolBar.add(pac);
          frame.setLayout(new BorderLayout());
          frame.add(toolBar, BorderLayout.NORTH);
-        
-         otchot=new JButton("Отчёт");
-         otchot.setToolTipText("Графики");
-         toolBar.add(otchot);
-         frame.setLayout(new BorderLayout());
-         frame.add(toolBar, BorderLayout.NORTH);
-          
+         
          Box mainBox = Box.createVerticalBox();
          Box box1 = Box.createHorizontalBox();
  		 b = new JLabel("BUS Parameter");
@@ -188,8 +185,7 @@ public class Frame1 {
  		 mainBox1.add(box3);
 		 mainBox1.add(box4);
 		 frame.add(mainBox1, BorderLayout.WEST);
-		 
-		 
+		  
          JPanel panel = new JPanel();
          frame.add(panel, BorderLayout.CENTER);
          String[] elements = new String[] {"System1", "System2", "System3"};
@@ -199,25 +195,11 @@ public class Frame1 {
          panel.add(comboBox,BorderLayout.CENTER); 
          DDDD AD = new DDDD();
          pac.addActionListener(AD);
-         otchot.addActionListener(AD);
-
 		 }
 
 
 	class DDDD implements ActionListener {
-		 private Date date(final int day, final int month, final int year) {
-
-		        final Calendar calendar = Calendar.getInstance();
-		        calendar.set(year, month, day);
-		        final Date result = calendar.getTime();
-		        return result;
-
-		    }
-		 private Date date(int hour) {
-		        final Calendar calendar = Calendar.getInstance();
-		        calendar.set(2009, Calendar.DECEMBER, 1, hour, 0, 0);
-		        return calendar.getTime();
-		    }
+		
 		public void actionPerformed(ActionEvent ev){
 			 if (ev.getSource() == pac) {
 	                
@@ -228,56 +210,7 @@ public class Frame1 {
 	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали ECU");
 	                }
 	            }
-			 if (ev.getSource() == otchot) {
-				
-				 //DefaultIntervalCategoryDataset s1 = new DefaultIntervalCategoryDataset();*/
-					TaskSeriesCollection s1 = new TaskSeriesCollection();
-					TaskSeries d1 = new TaskSeries("Task 1");
-					Task t1 = new Task("Core1", date(1), date(24));
-					t1.addSubtask(new Task("Task1", date(3), date(5)));
-					t1.addSubtask(new Task("Task2", date(6), date(9)));
-					d1.add(t1);
-					Task t2 = new Task("Core2", date(1), date(24));
-					t2.addSubtask(new Task("Task1", date(4), date(7)));
-					t2.addSubtask(new Task("Task2", date(8), date(12)));
-					d1.add(t2);
-					Task t3 = new Task("Core3", date(1), date(24));
-					t3.addSubtask(new Task("Task1", date(9), date(11)));
-					t3.addSubtask(new Task("Task2", date(10), date(12)));
-					d1.add(t3);
-					Task tg = new Task("Core4", date(1), date(24));
-					tg.addSubtask(new Task("Task1", date(16), date(17)));
-					tg.addSubtask(new Task("Task2", date(18), date(19)));
-					d1.add(tg);
-					Task tk = new Task("Core5", date(1), date(24));
-					tk.addSubtask(new Task("Task1", date(2), date(3)));
-					tk.addSubtask(new Task("Task2", date(4), date(8)));
-					d1.add(tk);
-					s1.add(d1);
-					
-					TaskSeries d2 = new TaskSeries("Task2");
-					Task t4 = new Task("Core1", date(1), date(24));
-					t4.addSubtask(new Task("Task1", date(1), date(5)));
-					t4.addSubtask(new Task("Task2", date(22), date(23)));
-					d2.add(t4);
-					Task t5 = new Task("Core2", date(1), date(24));
-					t5.addSubtask(new Task("Task1", date(7), date(12)));
-					t5.addSubtask(new Task("Task2", date(0), date(2)));
-					d2.add(t5);
-					Task t6 = new Task("Core3", date(1), date(24));
-					t6.addSubtask(new Task("Task1", date(5), date(15)));
-					t6.addSubtask(new Task("Task2", date(8), date(13)));
-					d2.add(t6);
-					s1.add(d2);
-					
-					JFreeChart jchart = ChartFactory.createGanttChart("Graphic", "ECU1", "Tasks", s1, true, true, true);
-					ChartFrame chartFrm = new ChartFrame("ModEAS Graphic",jchart,true);
-					chartFrm.setVisible(true);;
-					chartFrm.setSize(500,400);
-					chartFrm.validate();
-
-						 
-	            }
+			
 	}
 		}
 

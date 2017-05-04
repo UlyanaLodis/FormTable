@@ -37,12 +37,20 @@ import javax.swing.ImageIcon;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import org.glassfish.jersey.client.ClientConfig;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.gantt.Task;
+import org.jfree.data.gantt.TaskSeries;
+import org.jfree.data.gantt.TaskSeriesCollection;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.URI;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.JButton;
@@ -53,7 +61,7 @@ import javax.swing.JButton;
 	 
 	 JTextField  nam, cor, bus;
 	 JComboBox comboBox, comboBox1, comboBox2;
-	 JButton button1, button2, save, add, delete, prosm,prosm1 ;
+	 JButton button1, button2, save, add, delete, prosm,prosm1, otchot ;
 	 JToolBar toolBar;
 	 JFrame frame;
 	 JButton ok,cancel;
@@ -64,6 +72,21 @@ import javax.swing.JButton;
 	 private JTable books,books1,books2;
 	 private DefaultTableModel model,model1,model2;
 	 String bu="", cores="";
+	 String[] taskName = {
+				"Task 1", 
+				"Task 2",
+				"Task 3",
+				"Task 4",
+				"Task 5",
+				"Task 6",
+				"Task 7",
+				"Task 8"
+				};
+	
+	    int [] nn ={1, 5, 8, 3, 5, 2, 9, 10};
+	    int [] nk = {2, 8, 12, 7, 12, 20, 17,24};
+	    Task[] t1;
+	    TaskSeries [] t2;
 	public Edit_cpu (String name){
 		frame = new JFrame();
 		frame.setSize(1000, 300);
@@ -104,8 +127,14 @@ import javax.swing.JButton;
         toolBar.add(prosm1);
         frame.setLayout(new BorderLayout());
         frame.add(toolBar, BorderLayout.NORTH); 
+        otchot=new JButton("Отчёт");
+        otchot.setToolTipText("Графики");
+        toolBar.add(otchot);
+        frame.setLayout(new BorderLayout());
+        frame.add(toolBar, BorderLayout.NORTH);
         DDDD AD = new DDDD();
         prosm.addActionListener(AD);
+        otchot.addActionListener(AD);
          
         Box mainBox = Box.createVerticalBox();
         Box box1 = Box.createHorizontalBox();
@@ -114,9 +143,9 @@ import javax.swing.JButton;
      	
 		headers = new Object[]{"№", "Tasks"};
         Object[][] data = {
-       	        { "1", "Task1"},
-       	        { "2", "Task2"},
-       	        { "3", "Task3"},
+       	        { "1", "Core 1"},
+       	        { "2", "Core 2"},
+       	        { "3", "Core 3"},
        	    };
         
         model = new DefaultTableModel(data, headers);
@@ -202,6 +231,11 @@ import javax.swing.JButton;
 	        		
 }
 	class DDDD implements ActionListener {
+		private Date date(int hour) {
+	        final Calendar calendar = Calendar.getInstance();
+	        calendar.set(2009, Calendar.DECEMBER, 1, hour, 0, 0);
+	        return calendar.getTime();
+	    }
 		public void actionPerformed(ActionEvent ev){
 			 if (ev.getSource() == prosm) {
 	                
@@ -213,6 +247,35 @@ import javax.swing.JButton;
 	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали Tasks");
 	                }
 	            }
+			 
+			 if (ev.getSource() == otchot) {
+				 if (books.getSelectedRow() != -1) {
+				 TaskSeriesCollection s1 = new TaskSeriesCollection();
+				 	t1=new Task [taskName.length];
+				 	t2=new TaskSeries [taskName.length];
+				 	
+				 	
+				 for (int k=0; k<taskName.length; k++)
+				 {
+					    t2[k] = new TaskSeries(taskName[k]);
+						t1[k] = new Task(taskName[k], date(1), date(24));
+						
+						t1[k].addSubtask(new Task("Task", date(nn[k]), date(nk[k])));
+						t2[k].add(t1[k]);
+
+				s1.add(t2[k]);
+				 }
+				 			 								
+					JFreeChart jchart = ChartFactory.createGanttChart("Graphic", (String) model.getValueAt(books.getSelectedRow(), 1), "Tasks", s1, true, true, true);
+					ChartFrame chartFrm = new ChartFrame("ModEAS Graphic",jchart,true);
+					chartFrm.setVisible(true);;
+					chartFrm.setSize(800,500);
+					chartFrm.setLocation(300,100);
+					chartFrm.validate();
+	            }
+				 else
+				 {JOptionPane.showMessageDialog(frame, "Вы не выбрали CORE");}
+			 }
 	}
  }	
 

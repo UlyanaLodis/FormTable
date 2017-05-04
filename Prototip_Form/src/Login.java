@@ -64,6 +64,7 @@ public class Login extends JFrame{
 	 JFrame frame;
 	 JButton ok,cancel;
 	 JLabel b,b1;
+	 
 	
 		public Login() {
 		 frame = new JFrame();
