@@ -142,7 +142,7 @@ import javax.swing.JButton;
 		Box boxcore = Box.createHorizontalBox();
 		addcore = new JButton("Добавить");
 		boxcore.add(addcore);
-		addcore.addActionListener(AD);
+		
 	    delete = new JButton("Удалить");
 	    delete.setToolTipText("Удалить компонент");
 	    boxcore.add(delete);
@@ -197,7 +197,6 @@ import javax.swing.JButton;
 		///////////////////////////
 		
 		frame.add(mainBoxC, BorderLayout.CENTER);
-		
 		Box mainBoxF = Box.createVerticalBox();
 		mainBoxF.setBorder(new TitledBorder("Frame"));
         Box boxF = Box.createHorizontalBox();
@@ -216,19 +215,22 @@ import javax.swing.JButton;
         books2.setGridColor(Color.BLUE);
         Box boxF1 = Box.createHorizontalBox();
 		boxF1.add(scroll2);
-		
 		Box boxframe = Box.createHorizontalBox();
 		addframe = new JButton("Добавить");
 		boxframe.add(addframe);
 		deleteframe = new JButton("Удалить");
 		deleteframe.setToolTipText("Удалить компонент");
-		boxframe.add(deleteframe);
-		            		
+		boxframe.add(deleteframe);            		
 		mainBoxF.add(boxF);
 		mainBoxF.add(boxF1);
 		mainBoxF.add(boxframe);
 		mainBoxC.add(mainBoxF);
-
+		
+		////////////////////////
+		addcore.addActionListener(AD);
+		addtask.addActionListener(AD);
+		addframe.addActionListener(AD);
+		///////////////////////
 		
 		button1.addActionListener(new ActionListener() {
 	         public void actionPerformed(ActionEvent e) {
@@ -288,10 +290,16 @@ import javax.swing.JButton;
 			 }
 			 
 			 if (ev.getSource() == addcore) {
-				 
-				 
-				 AddCore oop = new AddCore(); 
-				 
+				 				 
+				 AddCore oop = new AddCore();
+			 }
+			 if (ev.getSource() == addtask) {
+ 				 
+				 AddTask ool = new AddTask();
+			 }
+			 if (ev.getSource() == addframe) {
+ 				 
+				 AddFrame oor = new AddFrame();
 			 }
 			 ///////////////////////////////////////////////////////////////////////////
 			 

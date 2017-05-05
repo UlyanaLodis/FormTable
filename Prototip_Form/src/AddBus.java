@@ -29,43 +29,53 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 
 
 
-public class AddCore {
+
+public class AddBus {
 
 
-JTextField  nam;
-JLabel b;
+JTextField  nam, speed;
+JLabel b,ts;
 JFrame frame;
-JButton okcore,notecore;
-
-
-
+JButton okcore, notecore ;
    
-public AddCore (){
+public AddBus(){
 	
 	/////////////////
-	frame = new JFrame("Core");
+	frame = new JFrame("Bus");
 	///////////////
 	
-	frame.setSize(200,100);
+	frame.setSize(250,150);
    frame.setLocation(500,100);
    frame.setResizable(false);
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.setVisible(true);
+	
 	Box mainBox = Box.createVerticalBox();
+	
     Box box1 = Box.createHorizontalBox();
-	 b = new JLabel("Name Core");
+	 b = new JLabel("Name Bus");
  	 nam = new JTextField(15);
  	 box1.add(b);
  	 box1.add(Box.createHorizontalStrut(6));
  	 box1.add(nam);
+ 	 	 	 
+ 	Box box3 = Box.createHorizontalBox();
+	 ts = new JLabel("Speed");
+	 speed= new JTextField(15);
+	 box3.add(ts);
+	 box3.add(Box.createHorizontalStrut(6));
+	 box3.add(speed);
  	Box box2 = Box.createHorizontalBox();
  	okcore = new JButton ("Ок");
  	notecore = new JButton ("Отмена");
  	box2.add(okcore);
  	box2.add(notecore);
-
+ 	
+ 	
     mainBox.setBorder(new EmptyBorder(12,12,12,12));
     mainBox.add(box1);
+    mainBox.add(Box.createVerticalStrut(12));
+    mainBox.add(box3);
     mainBox.add(Box.createVerticalStrut(12));
     mainBox.add(box2);
 
@@ -82,7 +92,6 @@ class DDDD implements ActionListener {
 			 frame.dispose();
 			 
 		 }
-	
 		 
 }
 }	

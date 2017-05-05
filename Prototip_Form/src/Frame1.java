@@ -78,7 +78,7 @@ public class Frame1 {
 		JComboBox comboBox;
 		 private JFrame frame, frame1;
 		    private DefaultTableModel model,model1;
-		    private JButton save, open, add, delete, pac, otchot;
+		    private JButton  add, delete, pac, but, but1;
 		    private JToolBar toolBar;
 		    private JScrollPane scroll,scroll1;
 		    private JTable books,books1;
@@ -114,8 +114,8 @@ public class Frame1 {
         toolBar = new JToolBar("Панель инструментов");
 
       
-        add = new JButton("Добавить");
-        add.setToolTipText("Добавить компонент");
+        add = new JButton("Добавить систему");
+        add.setToolTipText("Добавить систему");
         toolBar.add(add);
         frame.setLayout(new BorderLayout());
         frame.add(toolBar, BorderLayout.NORTH);
@@ -126,7 +126,7 @@ public class Frame1 {
         frame.setLayout(new BorderLayout());
         frame.add(toolBar, BorderLayout.NORTH);
      
-         pac = new JButton("Просмотреть");
+         pac = new JButton("Просмотреть компоненты");
          pac.setToolTipText("Сведения о компонентах");
          toolBar.add(pac);
          frame.setLayout(new BorderLayout());
@@ -149,9 +149,14 @@ public class Frame1 {
          books.setGridColor(Color.BLUE);
          Box box2 = Box.createHorizontalBox();
  		 box2.add(scroll);
- 		 mainBox.add(box1);
-		 mainBox.add(box2);
-		 frame.add(mainBox, BorderLayout.EAST);
+ 		Box boxbut = Box.createHorizontalBox();
+ 		but = new JButton("Добавить");
+ 		boxbut.add(but);
+ 		mainBox.add(box1);
+		mainBox.add(box2);
+		mainBox.add(boxbut);
+		frame.add(mainBox, BorderLayout.EAST);
+		 
 		 books.setCellSelectionEnabled(false);
 		 Box mainBox1 = Box.createVerticalBox();
          Box box3 = Box.createHorizontalBox();
@@ -176,8 +181,13 @@ public class Frame1 {
          //Размещение таблицы с данными
          Box box4 = Box.createHorizontalBox();
  		 box4.add(scroll1);
+ 		 Box boxbut1 = Box.createHorizontalBox();
+ 		 but1 = new JButton("Добавить");
+ 		 boxbut1.add(but1);
  		 mainBox1.add(box3);
 		 mainBox1.add(box4);
+		 mainBox1.add(but1);
+		 
 		 frame.add(mainBox1, BorderLayout.WEST);
 		  
          JPanel panel = new JPanel();
@@ -190,6 +200,8 @@ public class Frame1 {
          DDDD AD = new DDDD();
          pac.addActionListener(AD);
          add.addActionListener(AD);
+         but1.addActionListener(AD);
+         but.addActionListener(AD);
 		 }
 
 
@@ -206,6 +218,19 @@ public class Frame1 {
 	                    JOptionPane.showMessageDialog(frame, "Вы не выбрали ECU");
 	                }
 	            }
+			 
+              if (ev.getSource() == but1) {
+ 				 
+				 AddEcu oecu = new AddEcu();
+			 }
+              if (ev.getSource() == but) {
+  				 
+ 				 AddBus oecu = new AddBus();
+ 			 }
+              if (ev.getSource() == add) {
+   				 
+  				 AddSyst oecu = new AddSyst();
+  			 }
 			 
 			
 	}

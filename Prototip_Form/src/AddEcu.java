@@ -29,41 +29,43 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 
 
 
-public class AddCore {
+
+public class AddEcu {
 
 
-JTextField  nam;
-JLabel b;
+JTextField  nam, len;
+JLabel b,tl;
 JFrame frame;
-JButton okcore,notecore;
-
-
-
+JButton okcore, notecore;
    
-public AddCore (){
+public AddEcu(){
 	
 	/////////////////
-	frame = new JFrame("Core");
+	frame = new JFrame("Ecu");
 	///////////////
 	
-	frame.setSize(200,100);
+	frame.setSize(250,100);
    frame.setLocation(500,100);
    frame.setResizable(false);
 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	frame.setVisible(true);
+	
 	Box mainBox = Box.createVerticalBox();
+	
     Box box1 = Box.createHorizontalBox();
-	 b = new JLabel("Name Core");
+	 b = new JLabel("Name Ecu");
  	 nam = new JTextField(15);
  	 box1.add(b);
  	 box1.add(Box.createHorizontalStrut(6));
  	 box1.add(nam);
+ 	 	 	 
  	Box box2 = Box.createHorizontalBox();
  	okcore = new JButton ("Ок");
  	notecore = new JButton ("Отмена");
  	box2.add(okcore);
  	box2.add(notecore);
-
+ 	
+ 	
     mainBox.setBorder(new EmptyBorder(12,12,12,12));
     mainBox.add(box1);
     mainBox.add(Box.createVerticalStrut(12));
@@ -82,7 +84,6 @@ class DDDD implements ActionListener {
 			 frame.dispose();
 			 
 		 }
-	
 		 
 }
 }	
